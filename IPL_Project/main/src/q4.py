@@ -1,96 +1,95 @@
-class Q4:
-    def __init__(self):
-        self.df ={}
-
-    def team_season_match(self,m_rows):
+import csv
+import numpy as np
+from matplotlib import pyplot as plt
 
 
+SEASON = "season"
+TEAM_1 = "team1"
+TEAM_2 = "team2"
 
 
+def calculate(matches_file):
+    team_season_matches = {}
 
-        for row in m_rows:
+    with open(matches_file, newline="", encoding="utf-8") as matches_data:
+        matches_reader = csv.DictReader(matches_data)
 
-            if row['season'] in self.df:
+        for match in matches_reader:
+            season = match[SEASON]
+            team_1 = match[TEAM_1]
+            team_2 = match[TEAM_2]
 
-                if row['team1'] in self.df[row['season']]:
-                    self.df[row['season']][row['team1']] += 1
-                else:
-                    self.df[row['season']][row['team1']] = 1
+            if season not in team_season_matches:
+                team_season_matches[season] = {}
 
-                if row['team2'] in self.df[row['season']]:
-                    self.df[row['season']][row['team2']] += 1
-                else:
-                    self.df[row['season']][row['team2']] = 1
+            if team_1 not in team_season_matches[season]:
+                team_season_matches[season][team_1] = 0
+
+            if team_2 not in team_season_matches[season]:
+                team_season_matches[season][team_2] = 0
+
+            team_season_matches[season][team_1] += 1
+            team_season_matches[season][team_2] += 1
+
+    return team_season_matches
 
 
+def plot(team_season_matches):
+    seasons = sorted(team_season_matches.keys())
 
+    teams = set()
+
+    for season in team_season_matches:
+        for team in team_season_matches[season]:
+            teams.add(team)
+
+    teams = sorted(teams)
+
+    bottom = np.zeros(len(seasons))
+
+    plt.figure(figsize=(15, 7))
+
+    for team in teams:
+        match_counts = []
+
+        for season in seasons:
+            if team in team_season_matches[season]:
+                match_counts.append(team_season_matches[season][team])
             else:
+                match_counts.append(0)
 
-                self.df[row['season']] = {}
-
-                if row['team1'] in self.df[row['season']]:
-                    self.df[row['season']][row['team1']] += 1
-                else:
-                    self.df[row['season']][row['team1']] = 1
-
-                if row['team2'] in self.df[row['season']]:
-                    self.df[row['season']][row['team2']] += 1
-                else:
-                    self.df[row['season']][row['team2']] = 1
-
-
-
-
-    def plot(self):
-        import matplotlib.pyplot as plt
-        import numpy as np
-
-        seasons = sorted(self.df.keys())
-
-        teams = set()
-
-        for season in self.df:
-            teams.update(self.df[season].keys())
-
-        teams = sorted(teams)
-
-        bottom = np.zeros(len(seasons))
-
-        plt.figure(figsize=(15, 7))
-
-        for team in teams:
-
-            values = []
-
-            for season in seasons:
-                values.append(
-                    self.df[season].get(team, 0)
-                )
-
-            plt.bar(
-                seasons,
-                values,
-                bottom=bottom,
-                label=team
-            )
-
-            bottom += np.array(values)
-
-        plt.xlabel("Season")
-        plt.ylabel("Number of Matches")
-        plt.title("Matches Played by Each Team in Each Season")
-
-        plt.xticks(rotation=45)
-
-        plt.legend(
-            bbox_to_anchor=(1.05, 1),
-            loc="upper left"
+        plt.bar(
+            seasons,
+            match_counts,
+            bottom=bottom,
+            label=team
         )
 
-        plt.tight_layout()
-        plt.show()
+        bottom = bottom + np.array(match_counts)
 
-    def exc(self,m_rows):
-        ans = self.team_season_match(m_rows)
-        self.plot()
-        return ans
+    plt.xlabel("Season")
+    plt.ylabel("Number of Matches")
+    plt.title("Matches Played by Each Team in Each Season")
+
+    plt.xticks(rotation=45)
+
+    plt.legend(
+        bbox_to_anchor=(1.05, 1),
+        loc="upper left"
+    )
+
+    plt.tight_layout()
+    plt.show()
+
+
+def execute():
+    matches_file = "../../data/matches.csv"
+
+    team_season_matches = calculate(matches_file)
+
+    plot(team_season_matches)
+
+    return team_season_matches
+
+
+execute()

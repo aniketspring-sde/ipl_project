@@ -1,38 +1,51 @@
+import csv
 from matplotlib import pyplot as plt
 
 
-class Q1:
-    def __init__(self):
-        self.total_runs = {}
-        # self.d_rows = FetchData().fetch_deliveries()
+BATTING_TEAM = "batting_team"
+TOTAL_RUNS = "total_runs"
 
 
-    def run_teams(self, d_rows):
+def calculate(deliveries_file):
+    total_runs = {}
 
-        # d_rows = FetchData().fetch_deliveries()
+    with open(deliveries_file, "r") as deliveries_data:
+        matches_reader = csv.DictReader(deliveries_data)
 
-        for row in d_rows:
-            if row['batting_team'] in self.total_runs:
-                self.total_runs[row['batting_team']] += int(row['total_runs'])
-            else:
-                self.total_runs[row['batting_team']] = 0
-                self.total_runs[row['batting_team']] += int(row['total_runs'])
+        for match in matches_reader:
+            batting_team = match[BATTING_TEAM]
+            runs = int(match[TOTAL_RUNS])
 
-        return self.total_runs
+            if batting_team not in total_runs:
+                total_runs[batting_team] = 0
+
+            total_runs[batting_team] += runs
+
+    return total_runs
 
 
+def plot(total_runs):
+    plt.figure(figsize=(10, 5))
+
+    plt.bar(total_runs.keys(), total_runs.values())
+
+    plt.xticks(rotation=90)
+    plt.xlabel("Teams")
+    plt.ylabel("Total Runs")
+    plt.title("Total Runs by Each Team")
+
+    plt.tight_layout()
+    # plt.savefig("q1.png")
+    plt.show()
 
 
-    def plot(self):
-        plt.figure(figsize=(10, 5))
+def execute():
+    deliveries_file = "../../data/deliveries.csv"
 
-        plt.bar(self.total_runs.keys(), self.total_runs.values())
+    total_runs = calculate(deliveries_file)
+    plot(total_runs)
 
-        plt.xticks(list(self.total_runs.keys()), rotation=90)
+    return total_runs
 
-        plt.show()
 
-    def exc(self,d_rows):
-        ans = self.run_teams(d_rows)
-        self.plot()
-        return ans
+execute()

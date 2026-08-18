@@ -49,4 +49,3 @@ def execute():
     return matches_per_season
 
 
-execute()

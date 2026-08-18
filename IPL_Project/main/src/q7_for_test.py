@@ -71,4 +71,3 @@ def execute():
     return extra_runs_by_team
 
 
-execute()

@@ -1,5 +1,6 @@
 import csv
 
+from matplotlib import pyplot as plt
 
 SEASON = "season"
 MATCH_ID = "id"
@@ -70,7 +71,6 @@ def calculate(deliveries_file, matches_file):
 
     return economy_rates
 
-
 def plot(economy_rates):
     bowlers = list(economy_rates.keys())
     economy = list(economy_rates.values())
@@ -103,4 +103,3 @@ def execute():
     return economy_rates
 
 
-execute()

@@ -90,4 +90,3 @@ def execute():
     return team_season_wins
 
 
-execute()
