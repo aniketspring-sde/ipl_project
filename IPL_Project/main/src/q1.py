@@ -35,7 +35,7 @@ def plot(total_runs):
     plt.title("Total Runs by Each Team")
 
     plt.tight_layout()
-    # plt.savefig("q1.png")
+    plt.savefig("../plots/q1_total_runs_by_team.png")
     plt.show()
 
 

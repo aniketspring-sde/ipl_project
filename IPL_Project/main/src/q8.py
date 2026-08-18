@@ -1,5 +1,6 @@
 import csv
 
+from matplotlib import pyplot as plt
 
 SEASON = "season"
 MATCH_ID = "id"
@@ -86,6 +87,7 @@ def plot(economy_rates):
     plt.xticks(rotation=45, ha="right")
 
     plt.tight_layout()
+    plt.savefig("../plots/q8_Top_10_economical_bowlers_in_the_year_2015.png")
     plt.show()
 
 
@@ -94,8 +96,9 @@ def execute():
     deliveries_file = "../../data/deliveries.csv"
 
     economy_rates = calculate(
-        matches_file,
-        deliveries_file
+        deliveries_file,
+        matches_file
+
     )
 
     plot(economy_rates)

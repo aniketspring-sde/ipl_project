@@ -44,6 +44,8 @@ def calculate():
     umpire_country = {}
 
     for umpire, country in UMPIRE_COUNTRY_DATA.items():
+        if country == "India":
+            continue
         if country not in umpire_country:
             umpire_country[country] = 0
 
@@ -63,6 +65,8 @@ def plot(umpire_country):
     plt.title("Number of Umpires by Country")
 
     plt.tight_layout()
+
+    plt.savefig("../plots/q3_Foreign_umpire_analysis.png")
     plt.show()
 
 

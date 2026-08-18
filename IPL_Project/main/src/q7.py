@@ -54,6 +54,7 @@ def plot(extra_runs_by_team):
     plt.xticks(rotation=45, ha="right")
 
     plt.tight_layout()
+    plt.savefig("../plots/q7_Extra_runs_conceded_per_team_in_the_year_2016.png")
     plt.show()
 
 

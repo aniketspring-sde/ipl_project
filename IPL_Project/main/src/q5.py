@@ -36,6 +36,8 @@ def plot(matches_per_season):
     plt.title("Number of Matches Played in Each Season")
 
     plt.tight_layout()
+
+    plt.savefig("../plots/q5_matches_played_per_year_for_all_the_years_in_IPL.png")
     plt.show()
 
 

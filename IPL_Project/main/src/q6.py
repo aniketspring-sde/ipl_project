@@ -77,6 +77,7 @@ def plot(team_season_wins):
     )
 
     plt.tight_layout()
+    plt.savefig("../plots/q6_matches_won_per_team_per_year_in_IPL.png")
     plt.show()
 
 

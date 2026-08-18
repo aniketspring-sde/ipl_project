@@ -46,6 +46,7 @@ def plot(rcb_runs):
     plt.title("Top 10 RCB Batsmen by Runs")
 
     plt.tight_layout()
+    plt.savefig("../plots/q2_top_10_rcb_batsmen.png")
     plt.show()
 
 

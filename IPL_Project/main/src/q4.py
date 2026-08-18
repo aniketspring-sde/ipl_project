@@ -79,6 +79,8 @@ def plot(team_season_matches):
     )
 
     plt.tight_layout()
+
+    plt.savefig("../plots/q4_matches_played_by_team_by_season.png")
     plt.show()
 
 
